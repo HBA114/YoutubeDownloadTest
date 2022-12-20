@@ -1,7 +1,8 @@
-﻿using System.Linq;
-// See https://aka.ms/new-console-template for more information
-using YoutubeExplode;
+﻿using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
+
+
+//* For more information visit https://www.nuget.org/packages/YoutubeExplode
 
 var youtube = new YoutubeClient();
 
@@ -25,3 +26,5 @@ var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
 
 // await youtube.Videos.Streams.DownloadAsync(streamInfo, $"video.{streamInfo.Container}");
 await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{title}.mp3");
+
+//TODO: Add Flutter frontend and get all musics from https://music.youtube.com
