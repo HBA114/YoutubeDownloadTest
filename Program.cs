@@ -1,6 +1,9 @@
 ﻿using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 
+//! published with command below:
+
+//* dotnet publish -c release --self-contained --runtime linux-x64 --framework net7.0
 
 //* For more information visit https://www.nuget.org/packages/YoutubeExplode
 
