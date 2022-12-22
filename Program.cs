@@ -7,6 +7,32 @@ using YoutubeExplode.Videos.Streams;
 
 //* For more information visit https://www.nuget.org/packages/YoutubeExplode
 
+// var link = "https://www.youtube.com/watch?v=BX0lKSa_PTk&ab_channel=OliverTree";
+#region Version2Test
+// var youtube = new YoutubeClient();
+// var video = await youtube.Videos.GetAsync(link);
+// var streamManifest = await youtube.Videos.Streams.GetManifestAsync(link);
+
+// foreach (var item in streamManifest.GetAudioOnlyStreams().Where(x => x.Container == Container.Mp4).OrderByDescending(y => y.Size).ToList())
+// {
+//     System.Console.WriteLine($"Size: {item.Size}, Container: {item.Container}");
+// }
+
+
+// var title = video.Title;
+// var duration = video.Duration;
+
+// title = title.Replace("/", "");
+
+// var streamInfo = streamManifest.GetAudioOnlyStreams().Where(x => x.Container == Container.Mp4).OrderByDescending(y => y.Size).First();
+
+
+// var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
+
+// await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{title}.mp3");
+
+#endregion
+
 Console.WriteLine("Enter path for mp3.txt file(default: /home/hbasri/Documents/)...");
 string? path = Console.ReadLine();
 
@@ -47,7 +73,7 @@ foreach (var link in links)
 
     var streamInfo = streamManifest
         .GetAudioOnlyStreams()
-        .Where(s => s.Container == Container.WebM)
+        .Where(s => s.Container == Container.Mp4)
         .GetWithHighestBitrate();
 
     var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
