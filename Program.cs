@@ -36,7 +36,7 @@ using YoutubeExplode.Videos.Streams;
 Console.WriteLine("Enter path for mp3.txt file(default: /home/hbasri/Documents/)...");
 string? path = Console.ReadLine();
 
-if (path == null || path == "")
+if (string.IsNullOrEmpty(path))
 {
     path = "/home/hbasri/Documents/";
 }
@@ -47,7 +47,7 @@ if (!path.Contains(".txt"))
 Console.WriteLine("Enter save path for downloaded files(default: /home/hbasri/Documents/mp3/)...");
 string? savePath = Console.ReadLine();
 
-if (savePath == null || savePath == "")
+if (string.IsNullOrEmpty(savePath))
 {
     savePath = "/home/hbasri/Documents/mp3/";
 }
@@ -81,4 +81,5 @@ foreach (var link in links)
     // await youtube.Videos.Streams.DownloadAsync(streamInfo, $"video.{streamInfo.Container}");
     await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{savePath}{title}.mp3");
 }
+
 //TODO: Add Flutter frontend and get all musics from https://music.youtube.com
