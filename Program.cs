@@ -9,96 +9,105 @@ using YoutubeExplode.Videos.Streams;
 //* For more information visit https://www.nuget.org/packages/YoutubeExplode
 
 // var link = "https://www.youtube.com/watch?v=BX0lKSa_PTk&ab_channel=OliverTree";
-#region Version2Test
-// var youtube = new YoutubeClient();
-// var video = await youtube.Videos.GetAsync(link);
-// var streamManifest = await youtube.Videos.Streams.GetManifestAsync(link);
 
-// foreach (var item in streamManifest.GetAudioOnlyStreams().Where(x => x.Container == Container.Mp4).OrderByDescending(y => y.Size).ToList())
-// {
-//     System.Console.WriteLine($"Size: {item.Size}, Container: {item.Container}");
-// }
-
-
-// var title = video.Title;
-// var duration = video.Duration;
-
-// title = title.Replace("/", "");
-
-// var streamInfo = streamManifest.GetAudioOnlyStreams().Where(x => x.Container == Container.Mp4).OrderByDescending(y => y.Size).First();
-
-
-// var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
-
-// await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{title}.mp3");
-
-#endregion
-
-Console.WriteLine("Enter path for mp3.txt file(default: /home/hbasri/Documents/)...");
-string? path = Console.ReadLine();
-
-if (string.IsNullOrEmpty(path))
+class Program
 {
-    path = "/home/hbasri/Documents/";
-}
+    private static async Task Main(string[] args)
+    {
+        Console.WriteLine($"{args.Count()}");
+        string? argument1 = null;
+        string? argument2 = null;
+        if (args.Count() == 2)
+        {
+            argument1 = args[0];
+            argument2 = args[1];
 
-if (!path.Contains(".txt"))
-    path += "mp3.txt";
+            Console.WriteLine($"{argument1}");
+            Console.WriteLine($"{argument2}");
+        }
 
-Console.WriteLine("Enter save path for downloaded files(default: /home/hbasri/Documents/mp3/)...");
-string? savePath = Console.ReadLine();
+        string path = "";
+        string savePath = "";
 
-if (string.IsNullOrEmpty(savePath))
-{
-    savePath = "/home/hbasri/Documents/mp3/";
-}
+        if (argument1 == null && argument2 == null)
+        {
+            Console.WriteLine("Enter path for mp3.txt file(default: /home/hbasri/Documents/)...");
+            path = Console.ReadLine()!;
 
-if (savePath.Last() != '/') savePath += "/";
+            if (string.IsNullOrEmpty(path))
+            {
+                path = "/home/hbasri/Documents/";
+            }
+            Console.WriteLine($"{path}");
 
-string[] links = await File.ReadAllLinesAsync(path);
+            if (!path.Contains(".txt"))
+                path += "mp3.txt";
 
-var youtube = new YoutubeClient();
+            Console.WriteLine("Enter save path for downloaded files(default: /home/hbasri/Documents/mp3/)...");
+            savePath = Console.ReadLine()!;
 
-foreach (var link in links)
-{
-    var video = await youtube.Videos.GetAsync(link);
+            if (string.IsNullOrEmpty(savePath))
+            {
+                savePath = "/home/hbasri/Documents/mp3/";
+            }
+            Console.WriteLine($"{savePath}");
+        }
+        else
+        {
+            path = argument1!;
+            savePath = argument2!;
+        }
 
-    var title = video.Title;
-    var duration = video.Duration;
+        if (savePath.Last() != '/') savePath += "/";
 
-    title = title.Replace("/", "");
+        string[] links = await File.ReadAllLinesAsync(path);
 
-    Console.WriteLine($"Title: {title}\nDuration: {duration}");
+        var youtube = new YoutubeClient();
 
-    var streamManifest = await youtube.Videos.Streams.GetManifestAsync(link);
+        foreach (var link in links)
+        {
+            var video = await youtube.Videos.GetAsync(link);
 
-    var streamInfo = streamManifest
-        .GetAudioOnlyStreams()
-        .Where(s => s.Container == Container.Mp4)
-        .GetWithHighestBitrate();
+            var title = video.Title;
+            var duration = video.Duration;
 
-    var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
+            title = title.Replace("/", "");
 
-    // await youtube.Videos.Streams.DownloadAsync(streamInfo, $"video.{streamInfo.Container}");
-    await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{savePath}{title}.mp4");
+            Console.WriteLine($"Title: {title}\nDuration: {duration}");
 
-    // var converter = new NReco.VideoConverter.FFMpegConverter();
-    // converter.ConvertMedia($"{savePath}{title}.mp4", $"{savePath}{title}.mp3", ".mp3");
+            var streamManifest = await youtube.Videos.Streams.GetManifestAsync(link);
 
-    // Conversion conversion = new Conversion();
-    // conversion.SetOutputFormat(Format.mp3);
-    // conversion.SetInputFormat(Format.mp4);
-    // conversion.SetOutput($"{savePath}{title}.mp3");
+            var streamInfo = streamManifest
+                .GetAudioOnlyStreams()
+                .Where(s => s.Container == Container.Mp4)
+                .GetWithHighestBitrate();
 
-    // var x = await FFmpeg.Conversions.FromSnippet.ExtractAudio($"{savePath}{title}.mp4", $"{savePath}{title}.mp3");
-    var x = await FFmpeg.Conversions.FromSnippet.Convert($"{savePath}{title}.mp4", $"{savePath}{title}.mp3");
+            var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
 
-    x.SetOutput($"{savePath}{title}.mp3");
-    await x.Start();
-    x.Build();
+            var mp4_path = $"{savePath}{title}.mp4";
+            var mp3_path = $"{savePath}{title}.mp3";
 
-    // IConversionResult result = await Conversion.ExtractAudio(Resources.Mp4WithAudio, output)
-    //    .Start();
+            await youtube.Videos.Streams.DownloadAsync(streamInfo, mp4_path);
+
+            if (File.Exists(mp3_path)) continue;
+
+            try
+            {
+                var x = await FFmpeg.Conversions.FromSnippet.Convert(mp4_path, mp3_path);
+
+                x.SetOutput(mp3_path);
+                await x.Start();
+                x.Build();
+
+                File.Delete(mp4_path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error occurred while converting {mp4_path} to {mp3_path}!");
+                Console.WriteLine($"Error: {e.Message}");
+            }
+        }
+    }
 }
 
 //TODO: Add Flutter frontend and get all musics from https://music.youtube.com
