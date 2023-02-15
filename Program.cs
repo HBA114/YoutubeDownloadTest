@@ -14,7 +14,6 @@ class Program
 {
     private static async Task Main(string[] args)
     {
-        Console.WriteLine($"{args.Count()}");
         string? argument1 = null;
         string? argument2 = null;
         if (args.Count() == 2)
