@@ -1,4 +1,5 @@
-﻿using YoutubeExplode;
+﻿using Xabe.FFmpeg;
+using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 
 //! published with command below:
@@ -79,7 +80,25 @@ foreach (var link in links)
     var stream = await youtube.Videos.Streams.GetAsync(streamInfo);
 
     // await youtube.Videos.Streams.DownloadAsync(streamInfo, $"video.{streamInfo.Container}");
-    await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{savePath}{title}.mp3");
+    await youtube.Videos.Streams.DownloadAsync(streamInfo, $"{savePath}{title}.mp4");
+
+    // var converter = new NReco.VideoConverter.FFMpegConverter();
+    // converter.ConvertMedia($"{savePath}{title}.mp4", $"{savePath}{title}.mp3", ".mp3");
+
+    // Conversion conversion = new Conversion();
+    // conversion.SetOutputFormat(Format.mp3);
+    // conversion.SetInputFormat(Format.mp4);
+    // conversion.SetOutput($"{savePath}{title}.mp3");
+
+    // var x = await FFmpeg.Conversions.FromSnippet.ExtractAudio($"{savePath}{title}.mp4", $"{savePath}{title}.mp3");
+    var x = await FFmpeg.Conversions.FromSnippet.Convert($"{savePath}{title}.mp4", $"{savePath}{title}.mp3");
+
+    x.SetOutput($"{savePath}{title}.mp3");
+    await x.Start();
+    x.Build();
+
+    // IConversionResult result = await Conversion.ExtractAudio(Resources.Mp4WithAudio, output)
+    //    .Start();
 }
 
 //TODO: Add Flutter frontend and get all musics from https://music.youtube.com
