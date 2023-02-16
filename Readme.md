@@ -53,7 +53,7 @@ dotnet publish -c release --self-contained --runtime osx-x64 --framework net7.0
 
 ### For Linux
 
-- Edith .bashrc and add {this project directory}/bin/release/net7.0/linux-x64 to path. Or you can move this folder with ingredients and change folder name. If you move folder and/or chnaged folder name add to path that folder.
+- Edit .bashrc and add {this project directory}/bin/release/net7.0/linux-x64 to path. Or you can move this folder (only linux-x64) with ingredients and change folder name. If you move folder and/or chnaged folder name add to path that folder.
 
 - You should be able to run command below after successful path modify:
 ```
