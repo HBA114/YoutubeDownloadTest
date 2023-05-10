@@ -7,10 +7,6 @@ public class Parameters
     public string? _link = null;
     public string _downloadType;
 
-    public Parameters()
-    {
-    }
-
     public Parameters(string directory, string? filePath, string? link, string downloadType)
     {
         _directory = directory;

@@ -12,7 +12,9 @@ public static class GetPathParameters
     static Parameters decodeParameters(string[] parameters)
     {
         var paramTypeList = new List<ParameterType?>();
-        Parameters parametersEntity = new Parameters();
+        // Parameters parametersEntity = new Parameters();
+        string directory, downloadType;
+        string? filePath = null, link = null;
         foreach (var parameter in parameters)
         {
             paramTypeList.Add(GetParameterType(parameter));
@@ -24,30 +26,30 @@ public static class GetPathParameters
             string dirPathVar = "YoutubeDownloaded/";
             string dirPathGenerated = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), dirPathVar);
             if (!Path.Exists(dirPathGenerated)) System.IO.Directory.CreateDirectory(dirPathGenerated);
-            parametersEntity._directory = dirPathGenerated;
+            directory = dirPathGenerated;
         }
         else
         {
-            parametersEntity._directory = parameters[dirIndex];
+            directory = parameters[dirIndex];
         }
 
         var downloadTypeIndex = paramTypeList.IndexOf(ParameterType.DownloadType);
         if (downloadTypeIndex == -1)
         {
-            parametersEntity._downloadType = "mp3";
+            downloadType = "mp3";
         }
         else
         {
-            parametersEntity._downloadType = parameters[downloadTypeIndex];
+            downloadType = parameters[downloadTypeIndex];
         }
 
         var filePathIndex = paramTypeList.IndexOf(ParameterType.FilePath);
-        if (filePathIndex != -1) parametersEntity._filePath = parameters[filePathIndex];
+        if (filePathIndex != -1) filePath = parameters[filePathIndex];
 
         var linkIndex = paramTypeList.IndexOf(ParameterType.Link);
-        if (linkIndex != -1) parametersEntity._link = parameters[linkIndex];
+        if (linkIndex != -1) link = parameters[linkIndex];
 
-        return parametersEntity;
+        return new Parameters(directory, filePath, link, downloadType);
     }
 
     static ParameterType? GetParameterType(string parameter)
