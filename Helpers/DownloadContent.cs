@@ -23,8 +23,7 @@ public class DownloadContent
             Console.WriteLine($"Download From Link");
             await Download(_parameters._link);
         }
-
-        if (_parameters._filePath != null)
+        else if (_parameters._filePath != null)
         {
             Console.WriteLine($"Download From TextFile");
             string[] links = await File.ReadAllLinesAsync(_parameters._filePath);
@@ -46,7 +45,7 @@ public class DownloadContent
 
         title = title.Replace("/", "");
 
-        Console.WriteLine($"Title: {title}\nDuration: {duration}");
+        // Console.WriteLine($"Title: {title}\nDuration: {duration}");
 
         var streamManifest = await _youtube.Videos.Streams.GetManifestAsync(link);
 

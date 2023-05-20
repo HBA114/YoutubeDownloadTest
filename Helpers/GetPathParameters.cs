@@ -12,7 +12,6 @@ public static class GetPathParameters
     static Parameters decodeParameters(string[] parameters)
     {
         var paramTypeList = new List<ParameterType?>();
-        // Parameters parametersEntity = new Parameters();
         string directory, downloadType;
         string? filePath = null, link = null;
         foreach (var parameter in parameters)
