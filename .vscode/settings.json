@@ -2,5 +2,17 @@
     "cSpell.words": [
         "Muxed",
         "Xabe"
-    ]
+    ],
+    "dotnet.defaultSolution": "YoutubeDownloadTest.sln",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/obj": true,
+        "**/bin": true
+    },
+    "explorerExclude.backup": {}
 }
