@@ -2,16 +2,16 @@ namespace YoutubeDownloadTest.Entities;
 
 public class Parameters
 {
-    public string _directory;
-    public string? _filePath = null;
-    public string? _link = null;
-    public string _downloadType;
+    public string Directory { get; set; }
+    public string? FilePath { get; set; } = null;
+    public string? Link { get; set; } = null;
+    public string DownloadType { get; set; }
 
     public Parameters(string directory, string? filePath, string? link, string downloadType)
     {
-        _directory = directory;
-        _filePath = filePath;
-        _link = link;
-        _downloadType = downloadType;
+        Directory = directory;
+        FilePath = filePath;
+        Link = link;
+        DownloadType = downloadType;
     }
 }
