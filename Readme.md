@@ -2,7 +2,7 @@
 
 - This program reads given txt file (youtube video link per line), downloads linked videos with only audio, and converts that m4aac formatted files to mp3 with ffmpeg file on system (or downloaded and added to the path).
 
-# Frontend
+# Frontend (Not Up To Date For .Net 8 Version Of Project)
 
 - For frontend app visit [this](https://github.com/HBA114/youtube_mp3_desktop) repository.
 
