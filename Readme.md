@@ -35,6 +35,11 @@ dotnet run /home/$USER/Documents/mp3.txt /home/$USER/Documents/mp3/
 ```
 - This command reads text file from first argument and downloads files to second argument location.
 
+- Windows run example
+```
+./YoutubeDownloadTest.exe "C:\\Users\\hbasr\\Downloads\\mp3.txt" "mp3" "C:\\Users\\hbasr\\Downloads\\mp3_list_1\\"
+```
+
 ### How To Create Executables
 
 - Linux, not distribution-specific
@@ -57,7 +62,7 @@ dotnet publish -c release --self-contained --runtime osx-x64 --framework net7.0
 
 ### For Linux
 
-- Edit .bashrc and add {this project directory}/bin/release/net7.0/linux-x64 to path. Or you can move this folder (only linux-x64) with ingredients and change folder name. If you move folder and/or chnaged folder name add to path that folder.
+- Edit .bashrc and add {this project directory}/bin/release/net7.0/linux-x64 to path. Or you can move this folder (only linux-x64) with ingredients and change folder name. If you move folder and/or changed folder name add to path that folder.
 
 - You should be able to run command below after successful path modify:
 ```

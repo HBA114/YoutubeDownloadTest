@@ -1,8 +1,18 @@
 ﻿using YoutubeDownloadTest.Helpers;
 
+public class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var parameters = GetPathParameters.GetAllParams(args);
+        DownloadContent downloadContent = new(parameters);
+        await downloadContent.StartDownloadAsync();
+    }
+}
 //! published with command below:
 
-//* dotnet publish -c release --self-contained --runtime linux-x64 --framework net7.0
+//* dotnet publish -c release --self-contained --runtime linux-x64 --framework net8.0
+//* dotnet publish -c release --self-contained --runtime win-x64 --framework net8.0
 
 //* For more information visit https://www.nuget.org/packages/YoutubeExplode
 
@@ -15,16 +25,5 @@ dotnet run "/home/hbasri/Documents/mp3.txt" "/home/hbasri/Downloads" "mp3" "http
 dotnet run "/home/hbasri/Documents/mp3.txt" "/home/hbasri/Downloads"
 */
 
-public class Program
-{
-    private static async Task Main(string[] args)
-    {
-        var parameters = GetPathParameters.GetAllParams(args);
 
-        DownloadContent downloadContent = new DownloadContent(parameters);
-
-        await downloadContent.StartDownloadAsync();
-    }
-}
-
-//TODO: Add Flutter frontend and get all musics from https://music.youtube.com
+// TODO: Add Flutter frontend and get all musics from https://music.youtube.com
